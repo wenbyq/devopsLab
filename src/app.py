@@ -1,7 +1,7 @@
-def greet(name):
+def greet(name: str, greeting: str = "Hello"):
     if not name:
-        return "Hello, stranger"
-    return f"Hello, {name}"
+        return f"{greeting}, stranger"
+    return f"{greeting}, {name}"
 
 
 def process(data):
