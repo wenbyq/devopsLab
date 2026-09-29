@@ -1,5 +1,5 @@
-def greet(name):
-    return f"Hello, {name}"
+def greet(name: str, greeting: str = "Hello"):
+    return f"{greeting}, {name}"
 
 
 def process(data):
