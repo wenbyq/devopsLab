@@ -14,4 +14,4 @@
 
 ## Политика
 
-Master is always deployable.
+Master is always deployable.test
