@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "**" ]  # Запуск при пуше в любую ветку
+
+jobs:
+  lint:
+    name: Code Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Flake8
+        run: |
+          pip install flake8
+          flake8 src/
+
+  security_check:
+    name: Security Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Scan for Hardcoded Secrets
+        run: |
+          echo "=== Запуск проверки утечки паролей ==="
+          if grep -r -i -E "password\s*=\s*['\"].+['\"]|key\s*=\s*['\"].+['\"]" --exclude-dir={.git,.github} src/; then
+             echo "=== [КРИТИЧЕСКАЯ ОШИБКА] В коде найдены пароли или ключи! ==="
+             exit 1
+          else
+             echo "=== [УСПЕХ] Секретов не обнаружено. ==="
+             exit 0
+          fi
