@@ -15,3 +15,4 @@
 ## Политика
 
 Master is always deployable.test
+probe
